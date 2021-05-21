@@ -1,4 +1,3 @@
-// Button component that takes in props
 import axios from 'axios'
 
 const Generator = props => {

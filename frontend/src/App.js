@@ -1,9 +1,8 @@
-import logo from './logo.svg';
 import './App.css';
 import Generator from "./components/Generator.js"
 import {useState} from 'react'
 
-export default App => {
+const App = () => {
   const [state, setState] = useState("")
   return (
     <div className="App">
@@ -14,3 +13,5 @@ export default App => {
     </div>
   );
 }
+
+export default App
