@@ -1,7 +1,7 @@
 import {useEffect} from 'react'
 import axios from 'axios'
 
-function Generator (props) {
+export const Generator = props => {
     const clickHandler = () => {
         console.log("testing")
         axios.get('http://localhost:5000/api/generate')
@@ -12,8 +12,10 @@ function Generator (props) {
         .catch(err => console.log(err))
     }
     return (
-        <button onClick={ () => clickHandler() }>Generate!</button>
+        <div>
+            <button onClick={ () => clickHandler() }>Generate!</button>
+            <br/>
+            <br/>
+        </div>
     )
 }
-
-export default Generator
