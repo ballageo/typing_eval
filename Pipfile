@@ -7,6 +7,9 @@ name = "pypi"
 flask = "*"
 essential-generators = "*"
 flask-cors = "*"
+requests = "*"
+random-word = "*"
+pyyaml = "*"
 
 [dev-packages]
 

@@ -1,9 +1,10 @@
+import {useEffect} from 'react'
 import axios from 'axios'
 
-const Generator = props => {
+function Generator (props) {
     const clickHandler = () => {
         console.log("testing")
-        axios.get('http://localhost:5000/api/test')
+        axios.get('http://localhost:5000/api/generate')
         .then(res => {
             console.log(res)
             props.setState(res.data)
