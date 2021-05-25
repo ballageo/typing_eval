@@ -16,3 +16,5 @@ class Stat:
         query = "INSERT INTO stats (user_id, score, wpm, accuracy, created_at, updated_at) VALUES (%(user_id)s, %(score)s, %(wpm)s, %(accuracy)s, NOW(), NOW());"
         new_score_id = connectToMySQL("typing_eval_db").query_db(query, data)
         return new_score_id
+    
+    
