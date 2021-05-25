@@ -21,5 +21,4 @@ def doc_generate():
 @app.route('/user/<int:id>')
 def show_user(id):
     user = User.get_one({"id":id})
-    user_json = json.dumps(user.__dict__)
-    return user_json
+    return jsonify(user.__dict__)

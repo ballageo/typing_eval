@@ -1,7 +1,7 @@
-from flask import flash
+from flask import flash, jsonify
 from ..config.mysqlconnection import connectToMySQL
 from ..models.stats import Stat
-import re
+import re, json
 
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 
@@ -52,8 +52,16 @@ class User:
     def get_one(cls, data):
         query = "SELECT * FROM users LEFT JOIN stats ON users.id = stats.user_id WHERE users.id = %(id)s;"
         results = connectToMySQL("typing_eval_db").query_db(query, data)
-
-        user = cls(results[0])
+        data = {
+            "id" : results[0]['id'],
+            "username" : results[0]['username'],
+            "email" : results[0]['email'],
+            "password" : results[0]['password'],
+            "created_at" : str(results[0]['created_at']),
+            "updated_at" : str(results[0]['updated_at']),
+            "stats" : []
+        }
+        user = cls(data)
 
         for row in results:
             data = {
@@ -62,11 +70,11 @@ class User:
                 "score" : row['score'],
                 "wpm" : row['wpm'],
                 "accuracy" : row['accuracy'],
-                "created_at" : row['stats.created_at'],
-                "updated_at" : row['stats.updated_at']
+                "created_at" : str(row['stats.created_at']),
+                "updated_at" : str(row['stats.updated_at'])
             }
 
-            user.stats.append(Stat(data))
+            user.stats.append(json.dumps(Stat(data).__dict__))
         print(user)
         return user
     
