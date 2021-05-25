@@ -1,6 +1,7 @@
-from flask import flash
+from flask import flash, jsonify
 from ..config.mysqlconnection import connectToMySQL
-import re
+from ..models.stats import Stat
+import re, json
 
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 
@@ -12,7 +13,7 @@ class User:
         self.password = data['password']
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
-        self.scores = []
+        self.stats = []
 
     @staticmethod
     def validate_user(user):
@@ -46,4 +47,34 @@ class User:
         if len(result) < 1:
             return False
         return cls(result[0])
+    
+    @classmethod
+    def get_one(cls, data):
+        query = "SELECT * FROM users LEFT JOIN stats ON users.id = stats.user_id WHERE users.id = %(id)s;"
+        results = connectToMySQL("typing_eval_db").query_db(query, data)
+        data = {
+            "id" : results[0]['id'],
+            "username" : results[0]['username'],
+            "email" : results[0]['email'],
+            "password" : results[0]['password'],
+            "created_at" : str(results[0]['created_at']),
+            "updated_at" : str(results[0]['updated_at']),
+            "stats" : []
+        }
+        user = cls(data)
+
+        for row in results:
+            data = {
+                "id" : row["stats.id"],
+                "user_id" : row['user_id'],
+                "score" : row['score'],
+                "wpm" : row['wpm'],
+                "accuracy" : row['accuracy'],
+                "created_at" : str(row['stats.created_at']),
+                "updated_at" : str(row['stats.updated_at'])
+            }
+
+            user.stats.append(json.dumps(Stat(data).__dict__))
+        print(user)
+        return user
     
