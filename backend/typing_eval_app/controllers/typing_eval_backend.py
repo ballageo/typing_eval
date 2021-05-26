@@ -18,7 +18,7 @@ def doc_generate():
     res = ' '.join(word.decode() for word in random.choices(WORDS, k=150))
     return jsonify(res) # generates a new random paragraph of content and returns a response object in JSON
 
-@app.route('/user/<int:id>')
+@app.route('/user/get/<int:id>')
 def show_user(id):
     user = User.get_one({"id":id})
     return jsonify(user.__dict__)

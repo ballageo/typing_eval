@@ -63,18 +63,24 @@ class User:
         }
         user = cls(data)
 
-        for row in results:
-            data = {
-                "id" : row["stats.id"],
-                "user_id" : row['user_id'],
-                "score" : row['score'],
-                "wpm" : row['wpm'],
-                "accuracy" : row['accuracy'],
-                "created_at" : str(row['stats.created_at']),
-                "updated_at" : str(row['stats.updated_at'])
-            }
+        # for row in results:
+        #     data = {
+        #         "id" : row["stats.id"],
+        #         "user_id" : row['user_id'],
+        #         "score" : row['score'],
+        #         "wpm" : row['wpm'],
+        #         "accuracy" : row['accuracy'],
+        #         "created_at" : str(row['stats.created_at']),
+        #         "updated_at" : str(row['stats.updated_at'])
+        #     }
 
-            user.stats.append(json.dumps(Stat(data).__dict__))
-        print(user)
+        #     user.stats.append(json.dumps(Stat(data).__dict__))
+
+        for row in results:
+            # grabbing stats data according to the row's stats.id
+            stat = Stat.get_one({"id":row['stats.id']})
+            # adding it to list of stats in User object
+            user.stats.append(stat)
+
         return user
     
