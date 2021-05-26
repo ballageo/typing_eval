@@ -1,6 +1,8 @@
+from werkzeug.utils import redirect
 from typing_eval_app.models.users import User
+from typing_eval_app.models.stats import Stat
 from typing_eval_app import app
-from flask import jsonify
+from flask import jsonify, request
 import requests, random
 import json
 
@@ -22,3 +24,13 @@ def doc_generate():
 def show_user(id):
     user = User.get_one({"id":id})
     return jsonify(user.__dict__)
+
+@app.route('/stat/create', methods = ['post'])
+def create_stat():
+    data = {
+        "user_id" : 'placehold', #USER ID HERE
+        "wpm" : 100, #WPM HERE
+        "accuracy" : 99.9 #ACCURACY HERE
+    }
+    Stat.save(data)
+    return redirect('http://localhost:3000')
