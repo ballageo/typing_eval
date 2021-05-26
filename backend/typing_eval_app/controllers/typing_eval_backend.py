@@ -15,7 +15,7 @@ def index():
 @app.route('/api/generate')
 def doc_generate():
     global WORDS
-    res = ' '.join(word.decode() for word in random.choices(WORDS, k=150))
+    res = ' '.join(word.decode() for word in random.choices(WORDS, k=250))
     return jsonify(res) # generates a new random paragraph of content and returns a response object in JSON
 
 @app.route('/user/get/<int:id>')
