@@ -1,13 +1,9 @@
-from werkzeug.utils import redirect
 from typing_eval_app.models.users import User
 from typing_eval_app.models.stats import Stat
 from typing_eval_app import app
 from flask import jsonify, request
 import requests, random
 import json
-from flask_cors import CORS, cross_origin
-
-CORS(app)
 
 word_site = "https://www.mit.edu/~ecprice/wordlist.10000"
 response = requests.get(word_site)
@@ -28,7 +24,6 @@ def show_user(id):
     user = User.get_one({"id":id})
     return jsonify(user.__dict__)
 
-@cross_origin
 @app.post('/api/stat/create')
 def create_stat():
     print(request.get_json())
