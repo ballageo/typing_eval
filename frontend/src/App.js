@@ -17,6 +17,11 @@ const App = () => {
       console.log(res)
       setState(res.data) // Saves generated text from API call, showing to user
       setTimeout(() => {
+        axios.post('http://localhost:5000/api/stat/create', {data:"Testing the submissions"})
+        .then(res => {
+          console.log(res)
+        })
+        .catch(err => console.log(err))
         setRender(false) // Sets render to 'false', hiding input box
         setState("") // Clears text from screen after timeout
       }, 1500)}) 
