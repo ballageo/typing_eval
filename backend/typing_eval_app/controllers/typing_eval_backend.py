@@ -26,11 +26,12 @@ def show_user(id):
 
 @app.post('/api/stat/create')
 def create_stat():
-    print(request.get_json())
+    data = request.get_json()
+    print(data['data'])
     # data = {
     #     "user_id" : 'placehold', #USER ID HERE
     #     "wpm" : 100, #WPM HERE
     #     "accuracy" : 99.9 #ACCURACY HERE
     # }
     # Stat.save(data)
-    return jsonify("testing")
+    return jsonify(data)
