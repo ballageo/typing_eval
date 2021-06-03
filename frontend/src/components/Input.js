@@ -3,10 +3,12 @@ import {useState} from 'react'
 
 export const Input = props => {
     const changeHandler = (e) => {
-        e.preventDefault()
+        if (e.key == "Backspace") {
+            props.setDelCount((s, p) => s += 1)
+        }
         props.setInput(e.target.value)
     }
     return (
-        <textarea onChange={e => changeHandler(e)} rows="10" cols="100"></textarea>
+        <textarea onKeyUp={e => changeHandler(e)} rows="10" cols="100"></textarea>
     )
 }
