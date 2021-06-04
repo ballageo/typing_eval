@@ -2,7 +2,6 @@ from typing_eval_app.models.users import User
 from typing_eval_app.models.stats import Stat
 from typing_eval_app import app
 from flask import jsonify, request, session
-from flask_cors import cross_origin
 import requests, random
 import json
 
@@ -19,12 +18,10 @@ def index():
 def doc_generate():
     global WORDS
     res = ' '.join(word.decode() for word in random.choices(WORDS, k=250))
-    session['text'] = res
-    session['first'] = 1
-    print("added to session\n", res)
     response = jsonify(res)
-    response.headers.add('Access-Control-Allow-Headers',"Origin, X-Requested-With, Content-Type, Accept, x-auth")
-    return response # generates a new random paragraph of content and returns a response object in JSON
+    session['key'] = 'value'
+    print(session.__dict__, session['key'], '***trying to print session dictd and new key value')
+    return jsonify(res) # generates a new random paragraph of content and returns a response object in JSON
 
 @app.get('/api/user/get/<int:id>')
 def show_user(id):
@@ -36,15 +33,14 @@ def create_stat():
     from operator import itemgetter
     text, del_count = itemgetter('text', 'delCount')(request.get_json()) # retreives values from incoming JSON data
     words = text.split()
-    print(session['first'])
     data = {
         "user_id" : 1, #USER ID HERE
         "wpm" : len(words)//60, #WPM HERE
         "accuracy" : 69.420, #ACCURACY HERE
         "backspace_count": del_count
     }
-    new_stat_id = Stat.save(data)
-    new_stat = Stat.get_one({"id": new_stat_id})
-    response = jsonify(new_stat)
-    response.headers.add('Access-Control-Allow-Headers',"Origin, X-Requested-With, Content-Type, Accept, x-auth")
-    return response
+    print(session['key'], '***trying to print key value')
+    # new_stat_id = Stat.save(data)
+    # new_stat = Stat.get_one({"id": new_stat_id})
+    # response = jsonify(new_stat)
+    return jsonify(data)

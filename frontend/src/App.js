@@ -16,14 +16,14 @@ export const App = () => {
   // Declaring functions
   useEffect(() => { // callback function runs after dependency in array is changed
     if (render === false) { // only if box is not shown, function will happen
-      axios.post('http://localhost:5000/api/stat/create', {text: userInput, delCount: delCount}) // post user input data to server
+      axios.post('http://localhost:5000/api/stat/create',{text: userInput, delCount: delCount}, {withCredentials: true}) // post user input data to server
         .then(res => console.log(res))
         .catch(err => console.log(err))
     }
   }, [render]); // dependency array 'looking' at render state
   
   const clickHandler = () => {
-    axios.get('http://localhost:5000/api/generate')
+    axios.get('http://localhost:5000/api/generate', {withCredentials: true})
       .then(res => {
         console.log(res)
         setRender(true) // Sets render to 'true', showing input box
