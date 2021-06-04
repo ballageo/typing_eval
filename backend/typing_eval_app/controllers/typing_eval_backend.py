@@ -18,8 +18,7 @@ def index():
 def doc_generate():
     global WORDS
     res = ' '.join(word.decode() for word in random.choices(WORDS, k=250))
-    response = jsonify(res)
-    session['key'] = 'value'
+    session['text'] = res
     print(session.__dict__, session['key'], '***trying to print session dictd and new key value')
     return jsonify(res) # generates a new random paragraph of content and returns a response object in JSON
 
@@ -32,15 +31,18 @@ def show_user(id):
 def create_stat():
     from operator import itemgetter
     text, del_count = itemgetter('text', 'delCount')(request.get_json()) # retreives values from incoming JSON data
-    words = text.split()
+    words, sesh = text.split(), session['text'].split()
+    acc_count = 0
+    for idx, word in enumerate(words):
+        if word == sesh[idx]:
+            acc_count += 1
+    acc = round(acc_count/len(words), 4)
     data = {
         "user_id" : 1, #USER ID HERE
         "wpm" : len(words)//60, #WPM HERE
-        "accuracy" : 69.420, #ACCURACY HERE
+        "accuracy" : acc*100, #ACCURACY HERE
         "backspace_count": del_count
     }
-    print(session['key'], '***trying to print key value')
-    # new_stat_id = Stat.save(data)
-    # new_stat = Stat.get_one({"id": new_stat_id})
-    # response = jsonify(new_stat)
-    return jsonify(data)
+    new_stat_id = Stat.save(data)
+    new_stat = Stat.get_one({"id": new_stat_id})
+    return jsonify(new_stat)

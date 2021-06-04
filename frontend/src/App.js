@@ -33,7 +33,7 @@ export const App = () => {
       setRender(false) // Sets render to 'false', hiding input box
       setState("") // Clears text from screen after timeout
       setDelCount(0) // resets del counter
-    }, 2000)
+    }, 60000)
   }
   // Return of App
   return (
@@ -41,7 +41,7 @@ export const App = () => {
       <h2>Typing Evaluator!</h2>
       <h3>Click the button to randomly generate a paragraph to type!</h3>
       <Generator clickHandler={clickHandler} />
-      {input}
+      <p>{input}</p>
       <h4>{state}</h4>
     </div>
   );
