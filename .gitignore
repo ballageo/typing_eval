@@ -152,3 +152,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# MySQL ERD's
+*.mwb
