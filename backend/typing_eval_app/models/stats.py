@@ -13,7 +13,7 @@ class Stat:
     
     @classmethod
     def save(cls, data):
-        query = "INSERT INTO stats (user_id, wpm, accuracy, backspace_count, created_at, updated_at) VALUES (%(user_id)s, %(wpm)s, %(accuracy)s, %(backspace_cout)s, NOW(), NOW());"
+        query = "INSERT INTO stats (user_id, wpm, accuracy, backspace_count, created_at, updated_at) VALUES (%(user_id)s, %(wpm)s, %(accuracy)s, %(backspace_count)s, NOW(), NOW());"
         new_score_id = connectToMySQL("typing_eval_db").query_db(query, data)
         return new_score_id
 
