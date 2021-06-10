@@ -23,4 +23,10 @@ class Stat:
         result = connectToMySQL("typing_eval_db").query_db(query, data)
         return result[0]
     
+    @classmethod
+    def update(cls, data):
+        query = "UPDATE stats SET user_id = %(user_id)s WHERE stats.id = %(id)s;"
+        result = connectToMySQL("typing_eval_db").query_db(query, data)
+        return result[0]
+    
     
