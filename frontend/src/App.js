@@ -33,7 +33,7 @@ export const App = () => {
       setRender(false) // Sets render to 'false', hiding input box
       setState("") // Clears text from screen after timeout
       setDelCount(0) // resets del counter
-    }, 60000)
+    }, 2000)
   }
   // Return of App
   return (
