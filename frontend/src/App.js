@@ -38,6 +38,9 @@ export const App = () => {
   // Return of App
   return (
     <div className="App">
+      <nav>
+        <button style="">Login</button>
+      </nav>
       <h2>Typing Evaluator!</h2>
       <h3>Click the button to randomly generate a paragraph to type!</h3>
       <Generator clickHandler={clickHandler} />
