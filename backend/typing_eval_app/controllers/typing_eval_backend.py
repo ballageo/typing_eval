@@ -36,14 +36,16 @@ def create_stat():
     for idx, word in enumerate(words):
         if word == sesh[idx]:
             acc_count += 1
+    print(len(words))
     acc = round(acc_count/len(words), 4)
+    print(acc)
     if "user_id" in session:
         user_id = session['user_id']
     else:
         user_id = 1
     data = {
         "user_id" : user_id, #USER ID HERE
-        "wpm" : len(words)//60, #WPM HERE
+        "wpm" : len(words), #WPM HERE
         "accuracy" : acc*100, #ACCURACY HERE
         "backspace_count": del_count
     }
@@ -51,7 +53,7 @@ def create_stat():
     new_stat = Stat.get_one({"id": new_stat_id})
     return jsonify(new_stat)
 
-@app.route('/api/stat/update/<int:id>')
+@app.put('/api/stat/update/<int:id>')
 def update_stat():
     if 'user_id' not in session:
         return 404
