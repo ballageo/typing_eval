@@ -19,7 +19,6 @@ def doc_generate():
     global WORDS
     res = ' '.join(word.decode() for word in random.choices(WORDS, k=250))
     session['text'] = res
-    print(session.__dict__, session['key'], '***trying to print session dictd and new key value')
     return jsonify(res) # generates a new random paragraph of content and returns a response object in JSON
 
 @app.get('/api/user/get/<int:id>')

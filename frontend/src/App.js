@@ -16,7 +16,7 @@ export const App = () => {
   // Declaring functions
   useEffect(() => { // callback function runs after dependency in array is changed
     if (render === false) { // only if box is not shown, function will happen
-      axios.post('http://localhost:5000/api/stat/create',{text: userInput, delCount: delCount}, {withCredentials: true}) // post user input data to server
+      axios.post('http://localhost:5000/api/stat/create', {text: userInput, delCount: delCount}, {withCredentials: true}) // post user input data to server
         .then(res => console.log(res))
         .catch(err => console.log(err))
     }
