@@ -39,7 +39,7 @@ export const App = () => {
   return (
     <div className="App">
       <nav>
-        <button style="">Login</button>
+        <button>Login</button>
       </nav>
       <h2>Typing Evaluator!</h2>
       <h3>Click the button to randomly generate a paragraph to type!</h3>
