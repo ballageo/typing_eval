@@ -52,7 +52,7 @@ def create_stat():
     new_stat = Stat.get_one({"id": new_stat_id})
     return jsonify(new_stat)
 
-@app.update('/api/stat/update/<int:id>')
+@app.route('/api/stat/update/<int:id>')
 def update_stat():
     if 'user_id' not in session:
         return 404
