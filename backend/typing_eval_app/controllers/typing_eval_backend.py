@@ -1,3 +1,4 @@
+from werkzeug.utils import redirect
 from typing_eval_app.models.users import User
 from typing_eval_app.models.stats import Stat
 from typing_eval_app import app
@@ -36,8 +37,12 @@ def create_stat():
         if word == sesh[idx]:
             acc_count += 1
     acc = round(acc_count/len(words), 4)
+    if "user_id" in session:
+        user_id = session['user_id']
+    else:
+        user_id = 1
     data = {
-        "user_id" : 1, #USER ID HERE
+        "user_id" : user_id, #USER ID HERE
         "wpm" : len(words)//60, #WPM HERE
         "accuracy" : acc*100, #ACCURACY HERE
         "backspace_count": del_count
@@ -45,3 +50,17 @@ def create_stat():
     new_stat_id = Stat.save(data)
     new_stat = Stat.get_one({"id": new_stat_id})
     return jsonify(new_stat)
+
+@app.update('/api/stat/update/<int:id>')
+def update_stat():
+    if 'user_id' not in session:
+        return 404
+    from operator import itemgetter
+    stat_id = itemgetter('stat_id')(request.get_json())
+    data = {
+        'user_id' : session['user_id'],
+        'stat_id' : stat_id
+    }
+    updated_stat_id = Stat.update(data)
+    updated_stat = Stat.get_one({"id":updated_stat_id})
+    return jsonify(updated_stat)
